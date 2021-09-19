@@ -15,7 +15,7 @@ namespace Model
             Tracks = new Queue<Track>();
         }
 
-        public Track NextTrack()
+        public Track ChangeToNextTrack()
         {
             if(Tracks.Count == 0)
             {
@@ -27,12 +27,12 @@ namespace Model
             }
         }
 
-        public void addParticipant(IParticipant participant)
+        public void AddParticipant(IParticipant participant)
         {
             Participants.Add(participant);
         }
        
-        public void addTrack(Track track)
+        public void AddTrack(Track track)
         {
             Tracks.Enqueue(track);
         }
