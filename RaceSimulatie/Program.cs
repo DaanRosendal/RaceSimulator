@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Controller;
 
 namespace RaceSimulatie
@@ -9,7 +10,13 @@ namespace RaceSimulatie
         {
             Data.Initialize();
             Data.NextRace();
-            Console.WriteLine(Data.CurrentRace.Track.Name);
+            Visualizer.DrawTrack(Data.CurrentRace.Track);
+            
+            /*Console.WriteLine(Data.CurrentRace.Track.Name);
+            for (var i = 0; i < Data.CurrentRace.Track.Sections.Count; i++)
+            {
+                Console.WriteLine(Data.CurrentRace.Track.Sections.ElementAt(i).SectionType);
+            }*/
 
             for (; ; )
             {

@@ -15,24 +15,24 @@ namespace ControllerTest
         }
         
         [Test] 
-        public void ShouldReturnNullWhenQueueIsEmpty()
+        public void Should_Return_Null_When_Queue_Is_Empty()
         {
             var result = _competition.ChangeToNextTrack();
             Assert.IsNull(result);
         }
         
         [Test] 
-        public void ShouldReturnTrackWhenOneIsInQueue()
+        public void Should_Return_Track_When_One_Is_In_Queue()
         {
-            var track = addMockTrackToCompetition();
+            var track = AddMockTrackToCompetition();
             var result = _competition.ChangeToNextTrack();
             Assert.AreEqual(track, result);
         }
 
         [Test]
-        public void ShouldRemoveTrackFromQueueWhenOneIsInQueue()
+        public void Should_Remove_Track_From_Queue_When_One_Is_In_Queue()
         {
-            var track = addMockTrackToCompetition();
+            var track = AddMockTrackToCompetition();
             var result = _competition.ChangeToNextTrack();
             Assert.AreEqual(track, result);
             result = _competition.ChangeToNextTrack();
@@ -41,19 +41,19 @@ namespace ControllerTest
         }
 
         [Test]
-        public void ShouldReturnNextTrackWhenMultipleTracksAreInQueue()
+        public void Should_Return_Next_Track_When_Multiple_Tracks_Are_In_Queue()
         {
-            var track1 = addMockTrackToCompetition();
-            var track2 = addMockTrackToCompetition();
+            var track1 = AddMockTrackToCompetition();
+            var track2 = AddMockTrackToCompetition();
             var result1 = _competition.ChangeToNextTrack();
             Assert.AreEqual(result1, track1);
             var result2 = _competition.ChangeToNextTrack();
             Assert.AreEqual(result2, track2);
         }
 
-        public Track addMockTrackToCompetition()
+        public Track AddMockTrackToCompetition()
         {
-            SectionTypes[] sections = { SectionTypes.StartGrid, SectionTypes.Finish};
+            SectionTypes[] sections = { SectionTypes.StartGridFromLeftToRight, SectionTypes.FinishFromLeftToRight};
             var track = new Track("mockTrack", sections);
             _competition.AddTrack(track);
             return track;

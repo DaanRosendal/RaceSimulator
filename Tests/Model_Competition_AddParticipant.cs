@@ -14,10 +14,10 @@ namespace ControllerTest
         }
 
         [Test]
-        public void ShouldAddParticipantToCompetition()
+        public void Should_Add_Participant_To_Competition()
         {
-            Car car = new Car(1, 1, 1, 1);
-            Driver driver = new Driver("mockParticipant", car, TeamColors.Blue);
+            var car = new Car(1, 1, 1, 1);
+            var driver = new Driver("mockParticipant", car, TeamColors.Blue);
             _competition.AddParticipant(driver);
             Assert.AreEqual(driver, _competition.Participants[0]);
         }
