@@ -7,8 +7,8 @@ namespace Controller
 {
     public static class Data
     {
-        public static Competition Competition;
-        public static Race CurrentRace;
+        public static Competition Competition { get; set; }
+        public static Race CurrentRace { get; set; }
 
         public static void Initialize()
         {
@@ -19,9 +19,9 @@ namespace Controller
 
         public static void AddParticipants()
         {
-            var driver1 = new Model.Driver("John", new Car(5, 5, 5, 0), TeamColors.Green);
-            var driver2 = new Model.Driver("Rick", new Car(7, 7, 7, 0), TeamColors.Blue);
-            var driver3 = new Model.Driver("Morty", new Car(5, 5, 5, 0), TeamColors.Yellow);
+            var driver1 = new Model.Driver("John", new Car(5, 5, 5, 0), TeamColors.Green, "1");
+            var driver2 = new Model.Driver("Rick", new Car(7, 7, 7, 0), TeamColors.Blue, "2");
+            var driver3 = new Model.Driver("Morty", new Car(5, 5, 5, 0), TeamColors.Yellow, "3");
             Competition.AddParticipant(driver1);
             Competition.AddParticipant(driver2);
             Competition.AddParticipant(driver3);
@@ -29,39 +29,39 @@ namespace Controller
 
         public static void AddTracks()
         {
-            SectionTypes[] sections1 = 
+            Section[] sections1 = 
             { 
-                SectionTypes.StartGridFromLeftToRight, 
-                SectionTypes.StraightFromLeftToRight, 
-                SectionTypes.StraightFromLeftToRight, 
-                SectionTypes.StraightFromLeftToRight, 
-                SectionTypes.TurnFromLeftToDown, 
-                SectionTypes.StraightFromUpToDown,
-                SectionTypes.StraightFromUpToDown,
-                SectionTypes.TurnFromUpToLeft,
-                SectionTypes.StraightFromRightToLeft,
-                SectionTypes.StraightFromRightToLeft,
-                SectionTypes.StraightFromRightToLeft,
-                SectionTypes.TurnFromRightToUp,
-                SectionTypes.StraightFromDownToUp,
-                SectionTypes.FinishFromDownToUp
+                new Section(Direction.Down, Direction.Right, SectionType.Turn),
+                new Section(Direction.Left,Direction.Right, SectionType.Start), 
+                new Section(Direction.Left,Direction.Right, SectionType.Straight),
+                new Section(Direction.Left,Direction.Right, SectionType.Straight),
+                new Section(Direction.Left,Direction.Down, SectionType.Turn),
+                new Section(Direction.Up,Direction.Down, SectionType.Straight),
+                new Section(Direction.Up,Direction.Down, SectionType.Straight),
+                new Section(Direction.Up,Direction.Left, SectionType.Turn),
+                new Section(Direction.Right,Direction.Left, SectionType.Straight),
+                new Section(Direction.Right,Direction.Left, SectionType.Straight),
+                new Section(Direction.Right,Direction.Left, SectionType.Straight),
+                new Section(Direction.Right,Direction.Up, SectionType.Turn),
+                new Section(Direction.Down,Direction.Up, SectionType.Straight),
+                new Section(Direction.Down,Direction.Up, SectionType.Finish),
             };
-            SectionTypes[] sections2 =
+            Section[] sections2 =
             {
-                SectionTypes.StartGridFromLeftToRight, 
-                SectionTypes.StraightFromLeftToRight, 
-                SectionTypes.StraightFromLeftToRight, 
-                SectionTypes.StraightFromLeftToRight, 
-                SectionTypes.TurnFromLeftToDown, 
-                SectionTypes.StraightFromUpToDown,
-                SectionTypes.StraightFromUpToDown,
-                SectionTypes.TurnFromUpToLeft,
-                SectionTypes.StraightFromRightToLeft,
-                SectionTypes.StraightFromRightToLeft,
-                SectionTypes.StraightFromRightToLeft,
-                SectionTypes.TurnFromRightToDown,
-                SectionTypes.StraightFromUpToDown,
-                SectionTypes.FinishFromUpToDown
+                new Section(Direction.Left,Direction.Right, SectionType.Start), 
+                new Section(Direction.Left,Direction.Right, SectionType.Straight),
+                new Section(Direction.Left,Direction.Right, SectionType.Straight),
+                new Section(Direction.Left,Direction.Right, SectionType.Straight),
+                new Section(Direction.Left,Direction.Down, SectionType.Turn),
+                new Section(Direction.Up,Direction.Down, SectionType.Straight),
+                new Section(Direction.Up,Direction.Down, SectionType.Straight),
+                new Section(Direction.Up,Direction.Left, SectionType.Turn),
+                new Section(Direction.Right,Direction.Left, SectionType.Straight),
+                new Section(Direction.Right,Direction.Left, SectionType.Straight),
+                new Section(Direction.Right,Direction.Left, SectionType.Straight),
+                new Section(Direction.Right,Direction.Left, SectionType.Turn),
+                new Section(Direction.Up,Direction.Down, SectionType.Straight),
+                new Section(Direction.Up,Direction.Down, SectionType.Finish),
             };
             var track1 = new Track("Yoshi Falls", sections1);
             var track2 = new Track("Cheep Cheep Beach", sections2);

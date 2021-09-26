@@ -6,21 +6,20 @@ namespace Model
 {
     public class Track
     {
-        public string Name;
-        public LinkedList<Section> Sections;
+        public string Name { get; set; }
+        public LinkedList<Section> Sections { get; set; }
 
-        public Track(string name, SectionTypes[] sections)
+        public Track(string name, Section[] sections)
         {
             Name = name;
             AssignSectionsArrayToLinkedList(sections);
         }
 
-        private void AssignSectionsArrayToLinkedList(SectionTypes[] sections)
+        private void AssignSectionsArrayToLinkedList(Section[] sections)
         {
             Sections = new LinkedList<Section>();
-            foreach (var sectionType in sections)
+            foreach (var section in sections)
             {
-                var section = new Section(sectionType);
                 Sections.AddLast(section);
             }
         }

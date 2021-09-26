@@ -10,17 +10,16 @@ namespace RaceSimulatie
         {
             Data.Initialize();
             Data.NextRace();
+            Console.CursorVisible = false;
             Visualizer.DrawTrack(Data.CurrentRace.Track);
+            Visualizer.DrawParticipants(Data.CurrentRace.Track);
             
-            /*Console.WriteLine(Data.CurrentRace.Track.Name);
-            for (var i = 0; i < Data.CurrentRace.Track.Sections.Count; i++)
-            {
-                Console.WriteLine(Data.CurrentRace.Track.Sections.ElementAt(i).SectionType);
-            }*/
-
             for (; ; )
             {
                 System.Threading.Thread.Sleep(100);
+                Visualizer.HideParticipants(Data.CurrentRace.Track);
+                Visualizer.DrawTrack(Data.CurrentRace.Track);
+                Visualizer.RenderParticipants(Data.CurrentRace.Track);
             }
         }
     }

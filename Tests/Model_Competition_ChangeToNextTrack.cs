@@ -53,7 +53,10 @@ namespace ControllerTest
 
         public Track AddMockTrackToCompetition()
         {
-            SectionTypes[] sections = { SectionTypes.StartGridFromLeftToRight, SectionTypes.FinishFromLeftToRight};
+            Section[] sections = { 
+                new Section(Direction.Left,Direction.Right, SectionType.Start), 
+                new Section(Direction.Left,Direction.Right, SectionType.Finish)
+            };
             var track = new Track("mockTrack", sections);
             _competition.AddTrack(track);
             return track;

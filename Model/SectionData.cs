@@ -6,9 +6,17 @@ namespace Model
 {
     public class SectionData
     {
-        public IParticipant Left;
-        public int DistanceLeft;
-        public IParticipant Right;
-        public int DistanceRight;
+        public IParticipant LeftParticipant { get; set; }
+        public int DistanceLeft { get; set; }
+        public IParticipant RightParticipant { get; set; }
+        public int DistanceRight { get; set; }
+
+        // public SectionData(IParticipant leftParticipant, int distanceLeft, IParticipant rightParticipant, int distanceRight)
+        // {
+        //     LeftParticipant = leftParticipant;
+        //     DistanceLeft = distanceLeft;
+        //     RightParticipant = rightParticipant;
+        //     DistanceRight = distanceRight;
+        // }
     }
 }
