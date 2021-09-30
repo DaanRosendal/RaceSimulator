@@ -6,17 +6,29 @@ namespace Model
 {
     public class Car : IEquipment
     {
-        public int Quality { get; set; }
-        public int Performance { get; set; }
-        public int Speed { get; set; }
-        public int IsBroken { get; set; }
+        public Qualities Quality { get; set; }
+        public Performances Performance { get; set; }
+        public bool IsBroken { get; set; }
 
-        public Car(int quality, int performance, int speed, int isBroken)
+        private const int BaseSpeed = 2;
+        private int _speed;
+        public int Speed
+        {
+            get { return _speed; }
+            private set
+            {
+                _speed = BaseSpeed + (int)Quality + (int)Performance;
+                if (_speed <= 0) _speed = 1;
+                if (_speed >= 4) _speed = 3;
+            }
+        }
+
+        public Car(Qualities quality, Performances performance)
         {
             Quality = quality;
             Performance = performance;
-            Speed = speed;
-            IsBroken = isBroken;
+            IsBroken = false;
+            Speed = BaseSpeed;
         }
     }
 }

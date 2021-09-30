@@ -11,6 +11,8 @@ namespace Model
         public IEquipment Equipment { get; set; }
         public TeamColors TeamColor { get; set; }
         public string Icon { get; set; }
+
+        public ConsoleColor GetTeamColorAsConsoleColor();
     }
 
     public enum TeamColors
@@ -18,7 +20,7 @@ namespace Model
         Red,
         Green,
         Yellow,
-        Grey,
+        White,
         Blue
     }
 }

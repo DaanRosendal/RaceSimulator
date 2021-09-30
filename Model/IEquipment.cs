@@ -6,9 +6,23 @@ namespace Model
 {
     public interface IEquipment
     {
-        public int Quality { get; set; }
-        public int Performance { get; set; }
-        public int Speed { get; set; }
-        public int IsBroken { get; set; }
+        public Qualities Quality { get; set; }
+        public Performances Performance { get; set; }
+        public int Speed { get; }
+        public bool IsBroken { get; set; }
+    }
+    
+    public enum Performances
+    {
+        Outstanding = 1,
+        Normal = 0,
+        Shit = -1
+    }
+
+    public enum Qualities
+    {
+        Excellent = 1,
+        Average = 0,
+        Garbage = -1
     }
 }

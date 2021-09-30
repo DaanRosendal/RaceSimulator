@@ -11,95 +11,121 @@ namespace Controller
 
         private static string[] _startGridFromLeftToRight =
         {
-            "----",
-            " #  ",
-            " #  ",
-            "----"
+            "────",
+            " >  ",
+            " >  ",
+            "────"
         };
-        private static string[] _finishFromRightToLeft = _startGridFromLeftToRight;
 
         private static string[] _startGridFromRightToLeft =
         {
-            "----",
-            "  # ",
-            "  # ",
-            "----"
+            "────",
+            "  < ",
+            "  < ",
+            "────"
         };
-        private static string[] _finishFromLeftToRight = _startGridFromRightToLeft;
-
 
         private static string[] _startGridFromUpToDown =
         {
-            "|  |",
-            "|##|",
-            "|  |",
-            "|  |"
+            "│  │",
+            "│vv│",
+            "│  │",
+            "│  │"
         };
-        private static string[] _finishFromDownToUp = _startGridFromUpToDown;
-
         
         private static string[] _startGridFromDownToUp =
         {
-            "|  |",
-            "|  |",
-            "|##|",
-            "|  |"
+            "│  │",
+            "│  │",
+            "│^^│",
+            "│  │"
         };
-        private static string[] _finishFromUpToDown = _startGridFromDownToUp;
         
         private static string[] _straightFromLeftToRight =
         {
-            "----",
+            "────",
             "    ",
             "    ",
-            "----"
+            "────"
         };
         private static string[] _straightFromRightToLeft = _straightFromLeftToRight;
 
         private static string[] _straightFromUpToDown =
         {
-            "|  |",
-            "|  |",
-            "|  |",
-            "|  |"
+            "│  │",
+            "│  │",
+            "│  │",
+            "│  │"
         };
         private static string[] _straightFromDownToUp = _straightFromUpToDown;
 
         private static string[] _turnFromLeftToUp =
         {
-            "/  |",
-            "   |",
-            "   /",
-            "--/ "
+            "┘  │",
+            "   │",
+            "   │",
+            "───┘"
         };
         private static string[] _turnFromUpToLeft = _turnFromLeftToUp;
 
         private static string[] _turnFromRightToUp =
         {
-            "|  \\",
-            "|   ",
-            "\\   ",
-            " \\--"
+            "│  └",
+            "│   ",
+            "│   ",
+            "└───"
         };
         private static string[] _turnFromUpToRight = _turnFromRightToUp;
 
         private static string[] _turnFromDownToRight =
         {
-            " /--",
-            "/   ",
-            "|   ",
-            "|  /"
+            "┌───",
+            "│   ",
+            "│   ",
+            "│  ┌"
         };
         private static string[] _turnFromRightToDown = _turnFromDownToRight;
 
         private static string[] _turnFromLeftToDown =
         {
-            "--\\ ",
-            "   \\",
-            "   |",
-            "\\  |"
+            "───┐",
+            "   │",
+            "   │",
+            "┐  │"
         };
         private static string[] _turnFromDownToLeft = _turnFromLeftToDown;
+        
+        private static string[] _finishFromRightToLeft =
+        {
+            "─┬──",
+            " │  ",
+            " │  ",
+            "─┴──"
+        };
+
+        private static string[] _finishFromLeftToRight =
+        {
+            "──┬─",
+            "  │ ",
+            "  │ ",
+            "──┴─"
+        };
+
+        private static string[] _finishFromDownToUp =
+        {
+            "│  │",
+            "├──┤",
+            "│  │",
+            "│  │"
+        };
+        
+        private static string[] _finishFromUpToDown =
+        {
+            "│  │",
+            "│  │",
+            "├──┤",
+            "│  │"
+        };
 
         #endregion
 
@@ -213,18 +239,21 @@ namespace Controller
 
         private static void ApplySectionColor(Section section)
         {
-            // Console.BackgroundColor = ConsoleColor.DarkGray;
-            if (section.SectionType == SectionType.Start || section.SectionType == SectionType.Finish)
+            if (section.SectionType == SectionType.Start)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
             }
             else if (section.SectionType == SectionType.Straight || section.SectionType == SectionType.Turn)
             {
-                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else if (section.SectionType == SectionType.Finish)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
             }
         }
 
-        public static void DrawParticipants(Track track)
+        public static void DrawParticipantsInStartPosition(Track track)
         {
             Console.ForegroundColor = ConsoleColor.White;
 
@@ -252,9 +281,6 @@ namespace Controller
 
         public static void HideParticipants(Track track)
         {
-            Console.ForegroundColor = ConsoleColor.White;
-            
-            // Hide participant
             for (var node = track.Sections.First; node != null; node = node.Next)
             {
                 var section = node.Value;
@@ -265,9 +291,8 @@ namespace Controller
                         section.Y + section.LeftPath.Y[section.SectionData.DistanceLeft]
                     );
                     Console.Write(" ");
-                    section.SectionData.DistanceLeft++;
                 }
-
+            
                 if (section.SectionData.RightParticipant != null)
                 {
                     Console.SetCursorPosition(
@@ -275,49 +300,167 @@ namespace Controller
                         section.Y + section.RightPath.Y[section.SectionData.DistanceRight]
                     );
                     Console.Write(" ");
-                    section.SectionData.DistanceRight++;
                 }
+            }
+        }
+
+        public static void MoveParticipants(Track track)
+        {
+            for (var node = track.Sections.Last; node != null; node = node.Previous)
+            {
+                var currentSection = node.Value;
+                Section nextSection;
+                
+                // Assign next section
+                if (node.Next == null)
+                {
+                    nextSection = track.Sections.First.Value;
+                }
+                else
+                {
+                    nextSection = node.Next.Value;
+                }
+
+                // Move right participant
+                if (currentSection.SectionData.RightParticipant != null)
+                {
+                    var nextPosition = currentSection.SectionData.RightParticipant.Equipment.Speed +
+                                              currentSection.SectionData.DistanceRight;
+                    // Check if participant must be moved to next section
+                    if (nextPosition > 3)
+                    {
+                        if (nextSection.SectionData.RightParticipant == null)
+                        {
+                            nextSection.SectionData.RightParticipant = currentSection.SectionData.RightParticipant;
+                            nextSection.SectionData.DistanceRight = nextPosition - 4;
+                            
+                            currentSection.SectionData.RightParticipant = null;
+                            currentSection.SectionData.DistanceRight = 0;
+                        } else if (nextSection.SectionData.LeftParticipant == null)
+                        {
+                            // Overtake if participant is faster than participant ahead
+                            var driverSpeed = currentSection.SectionData.RightParticipant.Equipment.Speed;
+                            var driverAheadSpeed = nextSection.SectionData.RightParticipant.Equipment.Speed;
+                            if (driverSpeed > driverAheadSpeed)
+                            {
+                                nextSection.SectionData.LeftParticipant = currentSection.SectionData.RightParticipant;
+                                nextSection.SectionData.DistanceLeft = nextPosition - 4;
+                            
+                                currentSection.SectionData.RightParticipant = null;
+                                currentSection.SectionData.DistanceRight = 0;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        currentSection.SectionData.DistanceRight = nextPosition;
+                    }
+                }
+                
+                // Move left participant
+                if (currentSection.SectionData.LeftParticipant != null)
+                {
+                    var nextPosition = currentSection.SectionData.LeftParticipant.Equipment.Speed +
+                                       currentSection.SectionData.DistanceLeft;
+                    // Check if participant must be moved to next section
+                    if (nextPosition > 3)
+                    {
+                        if (nextSection.SectionData.LeftParticipant == null)
+                        {
+                            // Move from left to right lane if right is empty
+                            if (nextSection.SectionData.RightParticipant == null)
+                            {
+                                nextSection.SectionData.RightParticipant = currentSection.SectionData.LeftParticipant;
+                                nextSection.SectionData.DistanceRight = nextPosition - 4;
+                            }
+                            else
+                            {
+                                nextSection.SectionData.LeftParticipant = currentSection.SectionData.LeftParticipant;
+                                nextSection.SectionData.DistanceLeft = nextPosition - 4;
+                            }
+                            currentSection.SectionData.LeftParticipant = null;
+                            currentSection.SectionData.DistanceLeft = 0;
+                        }
+                    }
+                    else
+                    {
+                        // Move from left to right if right is empty
+                        if (currentSection.SectionData.RightParticipant == null)
+                        {
+                            currentSection.SectionData.RightParticipant = currentSection.SectionData.LeftParticipant;
+                            currentSection.SectionData.DistanceRight = nextPosition;
+                            
+                            currentSection.SectionData.LeftParticipant = null;
+                            currentSection.SectionData.DistanceLeft = 0;
+                        }
+                        else
+                        {
+                            currentSection.SectionData.DistanceLeft = nextPosition;
+                        }
+                    }
+                }
+                
+                // if (section.SectionData.LeftParticipant == null && section.SectionData.RightParticipant != null)
+                // {
+                //     section.SectionData.LeftParticipant = section.SectionData.RightParticipant;
+                //     section.SectionData.DistanceLeft = section.SectionData.DistanceRight;
+                //     section.SectionData.RightParticipant = null;
+                //     section.SectionData.DistanceRight = 0;
+                // }
+                //
+                // if (section.SectionData.LeftParticipant != null)
+                // {
+                //     section.SectionData.DistanceLeft += section.SectionData.LeftParticipant.Equipment.Speed;
+                // }
+                //
+                // if (section.SectionData.RightParticipant != null)
+                // {
+                //     section.SectionData.DistanceRight += section.SectionData.RightParticipant.Equipment.Speed;;
+                // }
+                //
+                // if (section.SectionData.DistanceLeft > 3)
+                // {
+                //     
+                //     if (node.Next != null)
+                //     {
+                //         node.Next.Value.SectionData.LeftParticipant = section.SectionData.LeftParticipant;
+                //     }
+                //     else
+                //     {
+                //         track.Sections.First.Value.SectionData.LeftParticipant = section.SectionData.LeftParticipant;
+                //         track.Sections.First.Value.SectionData.DistanceLeft = 0;
+                //     }
+                //     section.SectionData.DistanceLeft = 0;
+                //     section.SectionData.LeftParticipant = null;
+                // }
+                //
+                // if (section.SectionData.DistanceRight > 3)
+                // {
+                //     if (node.Next != null)
+                //     {
+                //         node.Next.Value.SectionData.RightParticipant = section.SectionData.RightParticipant;
+                //     }
+                //     else
+                //     {
+                //         track.Sections.First.Value.SectionData.RightParticipant = section.SectionData.RightParticipant;
+                //     }
+                //     section.SectionData.DistanceRight = 0;
+                //     section.SectionData.RightParticipant = null;
+                // }
             }
         }
 
         public static void RenderParticipants(Track track)
         {
+
             // Show participant at next position
             for (var node = track.Sections.First; node != null; node = node.Next)
             {
                 var section = node.Value;
 
-                if (section.SectionData.DistanceLeft == 4)
-                {
-                    
-                    if (node.Next != null)
-                    {
-                        node.Next.Value.SectionData.LeftParticipant = section.SectionData.LeftParticipant;
-                    }
-                    else
-                    {
-                        track.Sections.First.Value.SectionData.LeftParticipant = section.SectionData.LeftParticipant;
-                    }
-                    section.SectionData.DistanceLeft = 0;
-                    section.SectionData.LeftParticipant = null;
-                }
-                
-                if (section.SectionData.DistanceRight == 4)
-                {
-                    if (node.Next != null)
-                    {
-                        node.Next.Value.SectionData.RightParticipant = section.SectionData.RightParticipant;
-                    }
-                    else
-                    {
-                        track.Sections.First.Value.SectionData.RightParticipant = section.SectionData.RightParticipant;
-                    }
-                    section.SectionData.DistanceRight = 0;
-                    section.SectionData.RightParticipant = null;
-                }
-                
                 if (section.SectionData.LeftParticipant != null)
                 {
+                    Console.ForegroundColor = section.SectionData.LeftParticipant.GetTeamColorAsConsoleColor();
                     Console.SetCursorPosition(
                         section.X + section.LeftPath.X[section.SectionData.DistanceLeft], 
                         section.Y + section.LeftPath.Y[section.SectionData.DistanceLeft]
@@ -327,6 +470,7 @@ namespace Controller
 
                 if (section.SectionData.RightParticipant != null)
                 {
+                    Console.ForegroundColor = section.SectionData.RightParticipant.GetTeamColorAsConsoleColor();
                     Console.SetCursorPosition(
                         section.X + section.RightPath.X[section.SectionData.DistanceRight], 
                         section.Y + section.RightPath.Y[section.SectionData.DistanceRight]

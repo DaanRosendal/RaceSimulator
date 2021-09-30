@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Timers;
 using Model;
 
 namespace Controller
@@ -13,6 +14,7 @@ namespace Controller
         public DateTime StartTime { get; set; }
         private Random _random { get; set; }
         private Dictionary<Section, SectionData> _positions { get; set; }
+        private Timer _timer { get; set; }
 
         public Race(Track track, List<IParticipant> participants)
         {
@@ -28,28 +30,27 @@ namespace Controller
             foreach(var participant in Participants)
             {
                 var driver = (Driver) participant;
-                driver.Equipment.Quality = _random.Next(1, 11);
-                driver.Equipment.Performance = _random.Next(1, 11);
             }
         }
-
+        
         private void PlaceDriversInStartPosition()
         {
             var count = 0;
-            foreach (var section in Track.Sections)
+            for (var node = Track.Sections.First; node != null; node = node.Next)
             {
+                var section = node.Value;
                 if (
                     section.SectionType == SectionType.Start
                 )
                 {
-                    if (Participants.ElementAt(count) != null)
+                    if (count < Participants.Count)
                     {
-                        section.SectionData.LeftParticipant = Participants.ElementAt(count);
+                        section.SectionData.LeftParticipant = Participants.ElementAt(count++);
                         section.SectionData.DistanceLeft = 1;
                         
-                        if (Participants.ElementAt(count+1) != null)
+                        if (count < Participants.Count)
                         {
-                            section.SectionData.RightParticipant = Participants.ElementAt(count+1);
+                            section.SectionData.RightParticipant = Participants.ElementAt(count++);
                             section.SectionData.DistanceRight = 1;
                         }
                         else

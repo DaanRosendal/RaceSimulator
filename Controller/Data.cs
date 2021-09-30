@@ -19,9 +19,9 @@ namespace Controller
 
         public static void AddParticipants()
         {
-            var driver1 = new Model.Driver("John", new Car(5, 5, 5, 0), TeamColors.Green, "1");
-            var driver2 = new Model.Driver("Rick", new Car(7, 7, 7, 0), TeamColors.Blue, "2");
-            var driver3 = new Model.Driver("Morty", new Car(5, 5, 5, 0), TeamColors.Yellow, "3");
+            var driver1 = new Model.Driver("John", new Car(Qualities.Average, Performances.Normal), TeamColors.Green, "1");
+            var driver2 = new Model.Driver("Rick", new Car(Qualities.Excellent, Performances.Outstanding), TeamColors.Blue, "2");
+            var driver3 = new Model.Driver("Morty", new Car(Qualities.Garbage, Performances.Shit), TeamColors.Yellow, "3");
             Competition.AddParticipant(driver1);
             Competition.AddParticipant(driver2);
             Competition.AddParticipant(driver3);
@@ -33,7 +33,7 @@ namespace Controller
             { 
                 new Section(Direction.Down, Direction.Right, SectionType.Turn),
                 new Section(Direction.Left,Direction.Right, SectionType.Start), 
-                new Section(Direction.Left,Direction.Right, SectionType.Straight),
+                new Section(Direction.Left,Direction.Right, SectionType.Start), 
                 new Section(Direction.Left,Direction.Right, SectionType.Straight),
                 new Section(Direction.Left,Direction.Down, SectionType.Turn),
                 new Section(Direction.Up,Direction.Down, SectionType.Straight),
