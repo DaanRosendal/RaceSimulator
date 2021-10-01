@@ -324,8 +324,9 @@ namespace Controller
                 // Move right participant
                 if (currentSection.SectionData.RightParticipant != null)
                 {
+                    currentSection.SectionData.RightParticipant.previousSection = currentSection;
                     var nextPosition = currentSection.SectionData.RightParticipant.Equipment.Speed +
-                                              currentSection.SectionData.DistanceRight;
+                                       currentSection.SectionData.DistanceRight;
                     // Check if participant must be moved to next section
                     if (nextPosition > 3)
                     {
@@ -360,6 +361,7 @@ namespace Controller
                 // Move left participant
                 if (currentSection.SectionData.LeftParticipant != null)
                 {
+                    currentSection.SectionData.LeftParticipant.previousSection = currentSection;
                     var nextPosition = currentSection.SectionData.LeftParticipant.Equipment.Speed +
                                        currentSection.SectionData.DistanceLeft;
                     // Check if participant must be moved to next section
@@ -404,7 +406,7 @@ namespace Controller
 
         public static void RenderParticipants(Track track)
         {
-
+            
             // Show participant at next position
             for (var node = track.Sections.First; node != null; node = node.Next)
             {

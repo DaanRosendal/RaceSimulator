@@ -20,7 +20,8 @@ namespace RaceSimulatie
                 Visualizer.DrawTrack(Data.CurrentRace.Track);
                 Visualizer.MoveParticipants(Data.CurrentRace.Track);
                 Visualizer.RenderParticipants(Data.CurrentRace.Track);
-                Data.CurrentRace.
+                Data.CurrentRace.CheckIfParticipantsOnFinish();
+                Data.CurrentRace.RandomizeEquipment(10);
             }
         }
     }

@@ -72,7 +72,8 @@ namespace Controller
         
         public static void NextRace()
         {
-            if (Competition.Tracks.Count != 0) CurrentRace = new Race(Competition.ChangeToNextTrack(), Competition.Participants);
+            if (Competition.Tracks.Count != 0) 
+                CurrentRace = new Race(Competition.ChangeToNextTrack(), Competition.Participants);
         }
     }
 }

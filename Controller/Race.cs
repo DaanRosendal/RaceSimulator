@@ -12,9 +12,10 @@ namespace Controller
         public Track Track { get; set; }
         public List<IParticipant> Participants { get; set; }
         public DateTime StartTime { get; set; }
+        private const int Laps = 3;
         private Random _random { get; set; }
         private Dictionary<Section, SectionData> _positions { get; set; }
-        private Timer _timer { get; set; }
+        private Section FinishSection;
 
         public Race(Track track, List<IParticipant> participants)
         {
@@ -23,10 +24,16 @@ namespace Controller
             _random = new Random(DateTime.Now.Millisecond);
             _positions = new Dictionary<Section, SectionData>();
             PlaceDriversInStartPosition();
+            FinishSection = GetFinishSectionOfCurrentTrack();
         }
 
-        public void RandomizeEquipment()
+        public void RandomizeEquipment(int chance1In = -1)
         {
+            if (chance1In > 0)
+            {
+                var randomNumber = _random.Next(0, chance1In);
+                if (randomNumber != 1) return;
+            }
             foreach(var participant in Participants)
             {
                 var driver = (Driver) participant;
@@ -50,6 +57,35 @@ namespace Controller
                         (Qualities) qualityValues.GetValue(_random.Next(qualityValues.Length));
                     driver.Equipment.Quality = randomQuality;
                 }
+            }
+        }
+
+        public void CheckIfParticipantsOnFinish()
+        {
+            if (FinishSection.SectionData.LeftParticipant != null)
+            {
+                HandleFinishEntry(FinishSection.SectionData.LeftParticipant);
+            }
+            
+            if (FinishSection.SectionData.RightParticipant != null)
+            {
+                HandleFinishEntry(FinishSection.SectionData.RightParticipant);
+            }
+        }
+
+        private void HandleFinishEntry(IParticipant participant)
+        {
+            if (participant.previousSection != FinishSection)
+            {
+                participant.DrivenLaps++;
+            }
+            
+            if (participant.DrivenLaps >= Laps)
+            {
+                if (FinishSection.SectionData.LeftParticipant == participant)
+                    FinishSection.SectionData.LeftParticipant = null;
+                else if (FinishSection.SectionData.RightParticipant == participant)
+                    FinishSection.SectionData.RightParticipant = null;
             }
         }
         
@@ -84,6 +120,11 @@ namespace Controller
                     }
                 }
             }
+        }
+
+        private Section GetFinishSectionOfCurrentTrack()
+        {
+            return Track.Sections.FirstOrDefault(section => section.SectionType == SectionType.Finish);
         }
     }
 }
