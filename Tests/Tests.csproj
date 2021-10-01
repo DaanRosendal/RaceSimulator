@@ -6,6 +6,8 @@
     <IsPackable>false</IsPackable>
 
     <RootNamespace>ControllerTest</RootNamespace>
+
+    <LangVersion>9</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

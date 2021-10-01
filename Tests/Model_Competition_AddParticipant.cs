@@ -16,7 +16,7 @@ namespace ControllerTest
         [Test]
         public void Should_Add_Participant_To_Competition()
         {
-            var car = new Car(1, 1, 1, 1);
+            var car = new Car(Qualities.Average, Performances.Normal);
             var driver = new Driver("mockParticipant", car, TeamColors.Blue, "1");
             _competition.AddParticipant(driver);
             Assert.AreEqual(driver, _competition.Participants[0]);

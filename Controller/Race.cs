@@ -30,6 +30,26 @@ namespace Controller
             foreach(var participant in Participants)
             {
                 var driver = (Driver) participant;
+                var currentPerformance = participant.Equipment.Performance;
+                var currentQuality = participant.Equipment.Quality;
+                var randomPerformance = currentPerformance;
+                var randomQuality = currentQuality;
+
+                var performanceValues = Enum.GetValues(typeof(Performances));
+                while (currentPerformance == randomPerformance)
+                {
+                    randomPerformance =
+                        (Performances) performanceValues.GetValue(_random.Next(performanceValues.Length));
+                    driver.Equipment.Performance = randomPerformance;
+                }
+                
+                var qualityValues = Enum.GetValues(typeof(Qualities));
+                while (currentQuality == randomQuality)
+                {
+                    randomQuality =
+                        (Qualities) qualityValues.GetValue(_random.Next(qualityValues.Length));
+                    driver.Equipment.Quality = randomQuality;
+                }
             }
         }
         
@@ -64,7 +84,6 @@ namespace Controller
                     }
                 }
             }
-            // _positions.Add(Track.Sections.ElementAt(0), new SectionData());
         }
     }
 }

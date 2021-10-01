@@ -23,12 +23,14 @@ namespace Model
 
         public ConsoleColor GetTeamColorAsConsoleColor()
         {
-            if (TeamColor == TeamColors.Blue) return ConsoleColor.Blue;
-            else if (TeamColor == TeamColors.Red) return ConsoleColor.Red;
-            else if (TeamColor == TeamColors.Green) return ConsoleColor.Green;
-            else if (TeamColor == TeamColors.White) return ConsoleColor.White;
-            else if (TeamColor == TeamColors.Yellow) return ConsoleColor.Yellow;
-            else return ConsoleColor.DarkMagenta;
+            return TeamColor switch
+            {
+                TeamColors.Blue => ConsoleColor.Blue,
+                TeamColors.Red => ConsoleColor.Red,
+                TeamColors.Green => ConsoleColor.Green,
+                TeamColors.White => ConsoleColor.White,
+                TeamColors.Yellow => ConsoleColor.Yellow
+            };
         }
     }
 }

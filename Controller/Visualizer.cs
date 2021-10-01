@@ -399,54 +399,6 @@ namespace Controller
                         }
                     }
                 }
-                
-                // if (section.SectionData.LeftParticipant == null && section.SectionData.RightParticipant != null)
-                // {
-                //     section.SectionData.LeftParticipant = section.SectionData.RightParticipant;
-                //     section.SectionData.DistanceLeft = section.SectionData.DistanceRight;
-                //     section.SectionData.RightParticipant = null;
-                //     section.SectionData.DistanceRight = 0;
-                // }
-                //
-                // if (section.SectionData.LeftParticipant != null)
-                // {
-                //     section.SectionData.DistanceLeft += section.SectionData.LeftParticipant.Equipment.Speed;
-                // }
-                //
-                // if (section.SectionData.RightParticipant != null)
-                // {
-                //     section.SectionData.DistanceRight += section.SectionData.RightParticipant.Equipment.Speed;;
-                // }
-                //
-                // if (section.SectionData.DistanceLeft > 3)
-                // {
-                //     
-                //     if (node.Next != null)
-                //     {
-                //         node.Next.Value.SectionData.LeftParticipant = section.SectionData.LeftParticipant;
-                //     }
-                //     else
-                //     {
-                //         track.Sections.First.Value.SectionData.LeftParticipant = section.SectionData.LeftParticipant;
-                //         track.Sections.First.Value.SectionData.DistanceLeft = 0;
-                //     }
-                //     section.SectionData.DistanceLeft = 0;
-                //     section.SectionData.LeftParticipant = null;
-                // }
-                //
-                // if (section.SectionData.DistanceRight > 3)
-                // {
-                //     if (node.Next != null)
-                //     {
-                //         node.Next.Value.SectionData.RightParticipant = section.SectionData.RightParticipant;
-                //     }
-                //     else
-                //     {
-                //         track.Sections.First.Value.SectionData.RightParticipant = section.SectionData.RightParticipant;
-                //     }
-                //     section.SectionData.DistanceRight = 0;
-                //     section.SectionData.RightParticipant = null;
-                // }
             }
         }
 

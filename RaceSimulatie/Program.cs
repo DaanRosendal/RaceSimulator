@@ -9,7 +9,6 @@ namespace RaceSimulatie
         static void Main(string[] args)
         {
             Data.Initialize();
-            Data.NextRace();
             Console.CursorVisible = false;
             Visualizer.DrawTrack(Data.CurrentRace.Track);
             Visualizer.DrawParticipantsInStartPosition(Data.CurrentRace.Track);
@@ -21,6 +20,7 @@ namespace RaceSimulatie
                 Visualizer.DrawTrack(Data.CurrentRace.Track);
                 Visualizer.MoveParticipants(Data.CurrentRace.Track);
                 Visualizer.RenderParticipants(Data.CurrentRace.Track);
+                Data.CurrentRace.
             }
         }
     }
