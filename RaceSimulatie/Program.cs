@@ -12,17 +12,29 @@ namespace RaceSimulatie
             Console.CursorVisible = false;
             Visualizer.DrawTrack(Data.CurrentRace.Track);
             Visualizer.DrawParticipantsInStartPosition(Data.CurrentRace.Track);
-            
-            for (; ; )
+
+            while (Data.CurrentRace.Track != null)
             {
-                System.Threading.Thread.Sleep(100);
-                Visualizer.HideParticipants(Data.CurrentRace.Track);
-                Visualizer.DrawTrack(Data.CurrentRace.Track);
-                Visualizer.MoveParticipants(Data.CurrentRace.Track);
-                Visualizer.RenderParticipants(Data.CurrentRace.Track);
-                Data.CurrentRace.CheckIfParticipantsOnFinish();
-                Data.CurrentRace.RandomizeEquipment(10);
+                for (; ; )
+                {
+                    System.Threading.Thread.Sleep(100);
+                    Visualizer.HideParticipants(Data.CurrentRace.Track);
+                    Visualizer.DrawTrack(Data.CurrentRace.Track);
+                    Visualizer.MoveParticipants(Data.CurrentRace.Track);
+                    Visualizer.RenderParticipants(Data.CurrentRace.Track);
+                    Data.CurrentRace.CheckIfParticipantsOnFinish();
+                    Data.CurrentRace.RandomizeEquipment(10);
+                    
+                    if (!Data.CurrentRace.ParticipantsOnTrack())
+                    {
+                        Data.NextRace();
+                        Console.SetCursorPosition(0,0);
+                        break;
+                    }
+                }
             }
+            
+            Console.Clear();
         }
     }
 }

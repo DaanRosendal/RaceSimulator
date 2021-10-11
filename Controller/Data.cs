@@ -29,43 +29,57 @@ namespace Controller
         }
 
         public static void AddTracks()
-        {
-            Section[] sections1 = 
-            { 
-                new Section(Direction.Down, Direction.Right, SectionType.Turn),
-                new Section(Direction.Left,Direction.Right, SectionType.Start), 
-                new Section(Direction.Left,Direction.Right, SectionType.Start), 
-                new Section(Direction.Left,Direction.Right, SectionType.Straight),
-                new Section(Direction.Left,Direction.Down, SectionType.Turn),
-                new Section(Direction.Up,Direction.Down, SectionType.Straight),
-                new Section(Direction.Up,Direction.Down, SectionType.Straight),
-                new Section(Direction.Up,Direction.Left, SectionType.Turn),
-                new Section(Direction.Right,Direction.Left, SectionType.Straight),
-                new Section(Direction.Right,Direction.Left, SectionType.Straight),
-                new Section(Direction.Right,Direction.Left, SectionType.Straight),
-                new Section(Direction.Right,Direction.Up, SectionType.Turn),
-                new Section(Direction.Down,Direction.Up, SectionType.Straight),
-                new Section(Direction.Down,Direction.Up, SectionType.Finish),
-            };
-            Section[] sections2 =
+        { 
+            Section[] sections1 =
             {
-                new Section(Direction.Left,Direction.Right, SectionType.Start), 
-                new Section(Direction.Left,Direction.Right, SectionType.Straight),
-                new Section(Direction.Left,Direction.Right, SectionType.Straight),
-                new Section(Direction.Left,Direction.Right, SectionType.Straight),
-                new Section(Direction.Left,Direction.Down, SectionType.Turn),
-                new Section(Direction.Up,Direction.Down, SectionType.Straight),
-                new Section(Direction.Up,Direction.Down, SectionType.Straight),
-                new Section(Direction.Up,Direction.Left, SectionType.Turn),
-                new Section(Direction.Right,Direction.Left, SectionType.Straight),
-                new Section(Direction.Right,Direction.Left, SectionType.Straight),
-                new Section(Direction.Right,Direction.Left, SectionType.Straight),
-                new Section(Direction.Right,Direction.Left, SectionType.Turn),
-                new Section(Direction.Up,Direction.Down, SectionType.Straight),
-                new Section(Direction.Up,Direction.Down, SectionType.Finish),
+                new Section(Direction.Down, Direction.Right, SectionType.Turn),
+                new Section(Direction.Left, Direction.Right, SectionType.Straight),
+                new Section(Direction.Left, Direction.Right, SectionType.Straight),
+                new Section(Direction.Left, Direction.Down, SectionType.Turn),
+                new Section(Direction.Up, Direction.Down, SectionType.Straight),
+                new Section(Direction.Up, Direction.Down, SectionType.Straight),
+                new Section(Direction.Up, Direction.Right, SectionType.Turn),
+                new Section(Direction.Left, Direction.Down, SectionType.Turn),
+                new Section(Direction.Up, Direction.Down, SectionType.Straight),
+                new Section(Direction.Up, Direction.Left, SectionType.Turn),
+                new Section(Direction.Right, Direction.Left, SectionType.Straight),
+                new Section(Direction.Right, Direction.Left, SectionType.Straight),
+                new Section(Direction.Right, Direction.Left, SectionType.Straight),
+                new Section(Direction.Right, Direction.Up, SectionType.Turn),
+                new Section(Direction.Down, Direction.Up, SectionType.Finish),
+                new Section(Direction.Down, Direction.Up, SectionType.Start),
+                new Section(Direction.Down, Direction.Up, SectionType.Start),
+                new Section(Direction.Down, Direction.Up, SectionType.Straight),
             };
             var track1 = new Track("Yoshi Falls", sections1);
+            
+            Section[] sections2 = 
+            { 
+                new Section(Direction.Down, Direction.Right, SectionType.Turn),
+                new Section(Direction.Left, Direction.Right, SectionType.Straight),
+                new Section(Direction.Left, Direction.Right, SectionType.Straight),
+                new Section(Direction.Left, Direction.Right, SectionType.Straight),
+                new Section(Direction.Left, Direction.Right, SectionType.Straight),
+                new Section(Direction.Left, Direction.Down, SectionType.Turn),
+                new Section(Direction.Up, Direction.Down, SectionType.Straight),
+                new Section(Direction.Up, Direction.Left, SectionType.Turn),
+                new Section(Direction.Right, Direction.Down, SectionType.Turn),
+                new Section(Direction.Up, Direction.Right, SectionType.Turn),
+                new Section(Direction.Left, Direction.Down, SectionType.Turn),
+                new Section(Direction.Up, Direction.Left, SectionType.Turn),
+                new Section(Direction.Right, Direction.Left, SectionType.Straight),
+                new Section(Direction.Right, Direction.Left, SectionType.Straight),
+                new Section(Direction.Right, Direction.Down, SectionType.Turn),
+                new Section(Direction.Up, Direction.Left, SectionType.Turn),
+                new Section(Direction.Right, Direction.Left, SectionType.Straight),
+                new Section(Direction.Right, Direction.Up, SectionType.Turn),
+                new Section(Direction.Down, Direction.Up, SectionType.Straight),
+                new Section(Direction.Down, Direction.Up, SectionType.Finish),
+                new Section(Direction.Down, Direction.Up, SectionType.Start),
+                new Section(Direction.Down, Direction.Up, SectionType.Start),
+            };
             var track2 = new Track("Cheep Cheep Beach", sections2);
+            
             Competition.AddTrack(track1);
             Competition.AddTrack(track2);
         }

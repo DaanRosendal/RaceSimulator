@@ -13,32 +13,55 @@ namespace Controller
         public List<IParticipant> Participants { get; set; }
         public DateTime StartTime { get; set; }
         private const int Laps = 3;
-        private Random _random { get; set; }
-        private Dictionary<Section, SectionData> _positions { get; set; }
         private Section FinishSection;
+        private Random _random;
 
         public Race(Track track, List<IParticipant> participants)
         {
+            _random = new Random(DateTime.Now.Millisecond);
             Track = track;
             Participants = participants;
-            _random = new Random(DateTime.Now.Millisecond);
-            _positions = new Dictionary<Section, SectionData>();
             PlaceDriversInStartPosition();
             FinishSection = GetFinishSectionOfCurrentTrack();
         }
 
         public void RandomizeEquipment(int chance1In = -1)
         {
+            // 1 in x chance of randomizing the equipment
             if (chance1In > 0)
             {
-                var randomNumber = _random.Next(0, chance1In);
+                var randomNumber =  _random.Next(0, chance1In);
                 if (randomNumber != 1) return;
             }
+            
             foreach(var participant in Participants)
             {
                 var driver = (Driver) participant;
-                var currentPerformance = participant.Equipment.Performance;
-                var currentQuality = participant.Equipment.Quality;
+
+                // Potentially break/fix car
+                // if (driver.Equipment.IsBroken)
+                // {
+                //     var randomNumber = _random.Next(0, 2);
+                //     if (randomNumber == 0)
+                //     {
+                //         driver.Equipment.IsBroken = false;
+                //     }
+                // }
+                // else
+                // {
+                //     var chance = 10 + (int) driver.Equipment.Performance - (int) driver.Equipment.Quality;
+                //     var randomNumber = _random.Next(0, chance);
+                //
+                //
+                //     if (randomNumber > 0)
+                //     {
+                //         driver.Equipment.IsBroken = true;
+                //     }
+                // }
+
+                // Randomize equipment 
+                var currentPerformance = driver.Equipment.Performance;
+                var currentQuality = driver.Equipment.Quality;
                 var randomPerformance = currentPerformance;
                 var randomQuality = currentQuality;
 
@@ -58,6 +81,22 @@ namespace Controller
                     driver.Equipment.Quality = randomQuality;
                 }
             }
+        }
+
+        public bool ParticipantsOnTrack()
+        {
+            foreach (var section in Track.Sections)
+            {
+                if (section.SectionData.LeftParticipant != null || section.SectionData.RightParticipant != null)
+                    return true;
+            }
+
+            foreach (var participant in Participants)
+            {
+                participant.DrivenLaps = 0;
+            }
+            Console.Clear();
+            return false;
         }
 
         public void CheckIfParticipantsOnFinish()

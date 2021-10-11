@@ -324,80 +324,94 @@ namespace Controller
                 // Move right participant
                 if (currentSection.SectionData.RightParticipant != null)
                 {
-                    currentSection.SectionData.RightParticipant.previousSection = currentSection;
-                    var nextPosition = currentSection.SectionData.RightParticipant.Equipment.Speed +
-                                       currentSection.SectionData.DistanceRight;
-                    // Check if participant must be moved to next section
-                    if (nextPosition > 3)
+                    if (!currentSection.SectionData.RightParticipant.Equipment.IsBroken)
                     {
-                        if (nextSection.SectionData.RightParticipant == null)
+
+
+                        currentSection.SectionData.RightParticipant.previousSection = currentSection;
+                        var nextPosition = currentSection.SectionData.RightParticipant.Equipment.Speed +
+                                           currentSection.SectionData.DistanceRight;
+                        // Check if participant must be moved to next section
+                        if (nextPosition > 3)
                         {
-                            nextSection.SectionData.RightParticipant = currentSection.SectionData.RightParticipant;
-                            nextSection.SectionData.DistanceRight = nextPosition - 4;
-                            
-                            currentSection.SectionData.RightParticipant = null;
-                            currentSection.SectionData.DistanceRight = 0;
-                        } else if (nextSection.SectionData.LeftParticipant == null)
-                        {
-                            // Overtake if participant is faster than participant ahead
-                            var driverSpeed = currentSection.SectionData.RightParticipant.Equipment.Speed;
-                            var driverAheadSpeed = nextSection.SectionData.RightParticipant.Equipment.Speed;
-                            if (driverSpeed > driverAheadSpeed)
+                            if (nextSection.SectionData.RightParticipant == null)
                             {
-                                nextSection.SectionData.LeftParticipant = currentSection.SectionData.RightParticipant;
-                                nextSection.SectionData.DistanceLeft = nextPosition - 4;
-                            
+                                nextSection.SectionData.RightParticipant = currentSection.SectionData.RightParticipant;
+                                nextSection.SectionData.DistanceRight = nextPosition - 4;
+
                                 currentSection.SectionData.RightParticipant = null;
                                 currentSection.SectionData.DistanceRight = 0;
                             }
-                        }
-                    }
-                    else
-                    {
-                        currentSection.SectionData.DistanceRight = nextPosition;
-                    }
-                }
-                
-                // Move left participant
-                if (currentSection.SectionData.LeftParticipant != null)
-                {
-                    currentSection.SectionData.LeftParticipant.previousSection = currentSection;
-                    var nextPosition = currentSection.SectionData.LeftParticipant.Equipment.Speed +
-                                       currentSection.SectionData.DistanceLeft;
-                    // Check if participant must be moved to next section
-                    if (nextPosition > 3)
-                    {
-                        if (nextSection.SectionData.LeftParticipant == null)
-                        {
-                            // Move from left to right lane if right is empty
-                            if (nextSection.SectionData.RightParticipant == null)
+                            else if (nextSection.SectionData.LeftParticipant == null)
                             {
-                                nextSection.SectionData.RightParticipant = currentSection.SectionData.LeftParticipant;
-                                nextSection.SectionData.DistanceRight = nextPosition - 4;
+                                // Overtake if participant is faster than participant ahead
+                                var driverSpeed = currentSection.SectionData.RightParticipant.Equipment.Speed;
+                                var driverAheadSpeed = nextSection.SectionData.RightParticipant.Equipment.Speed;
+                                if (driverSpeed > driverAheadSpeed)
+                                {
+                                    nextSection.SectionData.LeftParticipant =
+                                        currentSection.SectionData.RightParticipant;
+                                    nextSection.SectionData.DistanceLeft = nextPosition - 4;
+
+                                    currentSection.SectionData.RightParticipant = null;
+                                    currentSection.SectionData.DistanceRight = 0;
+                                }
                             }
-                            else
-                            {
-                                nextSection.SectionData.LeftParticipant = currentSection.SectionData.LeftParticipant;
-                                nextSection.SectionData.DistanceLeft = nextPosition - 4;
-                            }
-                            currentSection.SectionData.LeftParticipant = null;
-                            currentSection.SectionData.DistanceLeft = 0;
-                        }
-                    }
-                    else
-                    {
-                        // Move from left to right if right is empty
-                        if (currentSection.SectionData.RightParticipant == null)
-                        {
-                            currentSection.SectionData.RightParticipant = currentSection.SectionData.LeftParticipant;
-                            currentSection.SectionData.DistanceRight = nextPosition;
-                            
-                            currentSection.SectionData.LeftParticipant = null;
-                            currentSection.SectionData.DistanceLeft = 0;
                         }
                         else
                         {
-                            currentSection.SectionData.DistanceLeft = nextPosition;
+                            currentSection.SectionData.DistanceRight = nextPosition;
+                        }
+                    }
+                }
+
+                // Move left participant
+                if (currentSection.SectionData.LeftParticipant != null)
+                {
+                    if (!currentSection.SectionData.LeftParticipant.Equipment.IsBroken)
+                    {
+                        currentSection.SectionData.LeftParticipant.previousSection = currentSection;
+                        var nextPosition = currentSection.SectionData.LeftParticipant.Equipment.Speed +
+                                           currentSection.SectionData.DistanceLeft;
+                        // Check if participant must be moved to next section
+                        if (nextPosition > 3)
+                        {
+                            if (nextSection.SectionData.LeftParticipant == null)
+                            {
+                                // Move from left to right lane if right is empty
+                                if (nextSection.SectionData.RightParticipant == null)
+                                {
+                                    nextSection.SectionData.RightParticipant =
+                                        currentSection.SectionData.LeftParticipant;
+                                    nextSection.SectionData.DistanceRight = nextPosition - 4;
+                                }
+                                else
+                                {
+                                    nextSection.SectionData.LeftParticipant =
+                                        currentSection.SectionData.LeftParticipant;
+                                    nextSection.SectionData.DistanceLeft = nextPosition - 4;
+                                }
+
+                                currentSection.SectionData.LeftParticipant = null;
+                                currentSection.SectionData.DistanceLeft = 0;
+                            }
+                        }
+                        else
+                        {
+                            // Move from left to right if right is empty
+                            if (currentSection.SectionData.RightParticipant == null)
+                            {
+                                currentSection.SectionData.RightParticipant =
+                                    currentSection.SectionData.LeftParticipant;
+                                currentSection.SectionData.DistanceRight = nextPosition;
+
+                                currentSection.SectionData.LeftParticipant = null;
+                                currentSection.SectionData.DistanceLeft = 0;
+                            }
+                            else
+                            {
+                                currentSection.SectionData.DistanceLeft = nextPosition;
+                            }
                         }
                     }
                 }
