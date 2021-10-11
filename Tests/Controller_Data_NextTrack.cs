@@ -12,7 +12,6 @@ namespace ControllerTest
         }
 
         [Test]
-        
         public void Should_Go_To_Next_Race()
         {
             var currentRace = Data.CurrentRace;

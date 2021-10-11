@@ -27,6 +27,7 @@ namespace RaceSimulatie
                     
                     if (!Data.CurrentRace.ParticipantsOnTrack())
                     {
+                        Console.Clear();
                         Data.NextRace();
                         Console.SetCursorPosition(0,0);
                         break;

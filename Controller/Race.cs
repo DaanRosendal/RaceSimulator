@@ -95,7 +95,6 @@ namespace Controller
             {
                 participant.DrivenLaps = 0;
             }
-            Console.Clear();
             return false;
         }
 

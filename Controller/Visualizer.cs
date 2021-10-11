@@ -326,8 +326,6 @@ namespace Controller
                 {
                     if (!currentSection.SectionData.RightParticipant.Equipment.IsBroken)
                     {
-
-
                         currentSection.SectionData.RightParticipant.previousSection = currentSection;
                         var nextPosition = currentSection.SectionData.RightParticipant.Equipment.Speed +
                                            currentSection.SectionData.DistanceRight;
