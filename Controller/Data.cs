@@ -40,7 +40,7 @@ namespace Controller
                 new Section(Direction.Up, Direction.Down, SectionType.Straight),
                 new Section(Direction.Up, Direction.Right, SectionType.Turn),
                 new Section(Direction.Left, Direction.Down, SectionType.Turn),
-                new Section(Direction.Up, Direction.Down, SectionType.Straight),
+                // new Section(Direction.Up, Direction.Down, SectionType.Straight),
                 new Section(Direction.Up, Direction.Left, SectionType.Turn),
                 new Section(Direction.Right, Direction.Left, SectionType.Straight),
                 new Section(Direction.Right, Direction.Left, SectionType.Straight),
@@ -49,7 +49,7 @@ namespace Controller
                 new Section(Direction.Down, Direction.Up, SectionType.Finish),
                 new Section(Direction.Down, Direction.Up, SectionType.Start),
                 new Section(Direction.Down, Direction.Up, SectionType.Start),
-                new Section(Direction.Down, Direction.Up, SectionType.Straight),
+                // new Section(Direction.Down, Direction.Up, SectionType.Straight),
             };
             var track1 = new Track("Yoshi Falls", sections1);
             

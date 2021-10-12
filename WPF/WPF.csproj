@@ -7,8 +7,51 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Images\TeamColors\" />
-      <Folder Include="Images\Sections\" />
+      <None Remove="Images\Sections\finishFromDownToUp.png" />
+      <None Remove="Images\Sections\finishFromLeftToRight.png" />
+      <None Remove="Images\Sections\startFromDownToUp.png" />
+      <None Remove="Images\Sections\startFromLeftToRight.png" />
+      <None Remove="Images\Sections\startFromUpToDown - Copy.png" />
+      <None Remove="Images\Sections\straightFromDownToUp.png" />
+      <None Remove="Images\Sections\straightFromLeftToRight.png" />
+      <None Remove="Images\Sections\turnFromLeftToDown.png" />
+      <None Remove="Images\Sections\turnFromRightToDown.png" />
+      <None Remove="Images\Sections\turnFromUpToLeft.png" />
+      <None Remove="Images\Sections\turnFromUpToRight.png" />
+      <None Remove="Images\TeamColors\blue.png" />
+      <None Remove="Images\TeamColors\green.png" />
+      <None Remove="Images\TeamColors\red.png" />
+      <None Remove="Images\TeamColors\white.png" />
+      <None Remove="Images\TeamColors\yellow.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="Images\Sections\finishFromDownToUp.png" />
+      <Content Include="Images\Sections\finishFromLeftToRight.png" />
+      <Content Include="Images\Sections\startFromDownToUp.png" />
+      <Content Include="Images\Sections\startFromLeftToRight.png" />
+      <Content Include="Images\Sections\straightFromDownToUp.png" />
+      <Content Include="Images\Sections\straightFromLeftToRight.png" />
+      <Content Include="Images\Sections\turnFromLeftToDown.png" />
+      <Content Include="Images\Sections\turnFromRightToDown.png" />
+      <Content Include="Images\Sections\turnFromUpToLeft.png" />
+      <Content Include="Images\Sections\turnFromUpToRight.png" />
+      <Content Include="Images\TeamColors\blue.png" />
+      <Content Include="Images\TeamColors\green.png" />
+      <Content Include="Images\TeamColors\red.png" />
+      <Content Include="Images\TeamColors\white.png" />
+      <Content Include="Images\TeamColors\yellow.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Controller\Controller.csproj" />
+      <ProjectReference Include="..\Model\Model.csproj" />
+      <ProjectReference Include="..\RaceSimulatie\RaceSimulatie.csproj" />
+      <ProjectReference Include="..\Tests\Tests.csproj" />
     </ItemGroup>
 
 </Project>

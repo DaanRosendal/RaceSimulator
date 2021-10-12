@@ -15,6 +15,7 @@ namespace Model
         public Section previousSection { get; set; }
 
         public ConsoleColor GetTeamColorAsConsoleColor();
+        public string GetTeamColorAsIcon();
     }
 
     public enum TeamColors

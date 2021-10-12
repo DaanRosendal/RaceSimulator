@@ -36,5 +36,17 @@ namespace Model
                 TeamColors.Yellow => ConsoleColor.Yellow
             };
         }
+
+        public string GetTeamColorAsIcon()
+        {
+            return TeamColor switch
+            {
+                TeamColors.Blue => "C:\\RaceSimImages\\TeamColors\\blue.png",
+                TeamColors.Red => "C:\\RaceSimImages\\TeamColors\\red.png",
+                TeamColors.Green => "C:\\RaceSimImages\\TeamColors\\green.png",
+                TeamColors.White => "C:\\RaceSimImages\\TeamColors\\white.png",
+                TeamColors.Yellow => "C:\\RaceSimImages\\TeamColors\\yellow.png"
+            };
+        }
     }
 }

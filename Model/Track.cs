@@ -24,5 +24,51 @@ namespace Model
                 Sections.AddLast(section);
             }
         }
+        
+        public int GetWidthInPx()
+        {
+            var width = 100;
+            var highestWidth = 0;
+            
+            foreach (var section in Sections)
+            {
+                switch (section.OutgoingDirection)
+                {
+                    case Direction.Right:
+                        width += 100;
+                        break;
+                    case Direction.Left:
+                        width -= 100;
+                        break;
+                }
+
+                highestWidth = Math.Max(width, highestWidth);
+            }
+
+            return highestWidth;
+        }
+        
+        public int GetHeightInPx()
+        {
+            var height = 200;
+            var highestHeight = 0;
+
+            foreach (var section in Sections)
+            {
+                switch (section.OutgoingDirection)
+                {
+                    case Direction.Down:
+                        height += 100;
+                        break;
+                    case Direction.Up:
+                        height -= 100;
+                        break;
+                }
+
+                highestHeight = Math.Max(height, highestHeight);
+            }
+
+            return highestHeight;
+        }
     }
 }
