@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -45,7 +45,7 @@ namespace Model
                 highestWidth = Math.Max(width, highestWidth);
             }
 
-            return highestWidth;
+            return highestWidth+100;
         }
         
         public int GetHeightInPx()
@@ -68,7 +68,7 @@ namespace Model
                 highestHeight = Math.Max(height, highestHeight);
             }
 
-            return highestHeight;
+            return highestHeight+100;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows;
@@ -176,10 +176,163 @@ namespace WPF
                 }
             }
         }
+        
+        public static void MoveParticipants(Track track)
+        {
+            for (var node = track.Sections.Last; node != null; node = node.Previous)
+            {
+                var currentSection = node.Value;
+                Section nextSection;
+                
+                // Assign next section
+                if (node.Next == null)
+                {
+                    nextSection = track.Sections.First.Value;
+                }
+                else
+                {
+                    nextSection = node.Next.Value;
+                }
+
+                // Move right participant
+                if (currentSection.SectionData.RightParticipant != null)
+                {
+                    if (!currentSection.SectionData.RightParticipant.Equipment.IsBroken)
+                    {
+                        currentSection.SectionData.RightParticipant.previousSection = currentSection;
+                        var nextPosition = currentSection.SectionData.RightParticipant.Equipment.Speed +
+                                           currentSection.SectionData.DistanceRight;
+                        // Check if participant must be moved to next section
+                        if (nextPosition > 3)
+                        {
+                            if (nextSection.SectionData.RightParticipant == null)
+                            {
+                                nextSection.SectionData.RightParticipant = currentSection.SectionData.RightParticipant;
+                                nextSection.SectionData.DistanceRight = nextPosition - 4;
+
+                                currentSection.SectionData.RightParticipant = null;
+                                currentSection.SectionData.DistanceRight = 0;
+                            }
+                            else if (nextSection.SectionData.LeftParticipant == null)
+                            {
+                                // Overtake if participant is faster than participant ahead
+                                var driverSpeed = currentSection.SectionData.RightParticipant.Equipment.Speed;
+                                var driverAheadSpeed = nextSection.SectionData.RightParticipant.Equipment.Speed;
+                                if (driverSpeed > driverAheadSpeed)
+                                {
+                                    nextSection.SectionData.LeftParticipant =
+                                        currentSection.SectionData.RightParticipant;
+                                    nextSection.SectionData.DistanceLeft = nextPosition - 4;
+
+                                    currentSection.SectionData.RightParticipant = null;
+                                    currentSection.SectionData.DistanceRight = 0;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            currentSection.SectionData.DistanceRight = nextPosition;
+                        }
+                    }
+                }
+
+                // Move left participant
+                if (currentSection.SectionData.LeftParticipant != null)
+                {
+                    if (!currentSection.SectionData.LeftParticipant.Equipment.IsBroken)
+                    {
+                        currentSection.SectionData.LeftParticipant.previousSection = currentSection;
+                        var nextPosition = currentSection.SectionData.LeftParticipant.Equipment.Speed +
+                                           currentSection.SectionData.DistanceLeft;
+                        // Check if participant must be moved to next section
+                        if (nextPosition > 3)
+                        {
+                            if (nextSection.SectionData.LeftParticipant == null)
+                            {
+                                // Move from left to right lane if right is empty
+                                if (nextSection.SectionData.RightParticipant == null)
+                                {
+                                    nextSection.SectionData.RightParticipant =
+                                        currentSection.SectionData.LeftParticipant;
+                                    nextSection.SectionData.DistanceRight = nextPosition - 4;
+                                }
+                                else
+                                {
+                                    nextSection.SectionData.LeftParticipant =
+                                        currentSection.SectionData.LeftParticipant;
+                                    nextSection.SectionData.DistanceLeft = nextPosition - 4;
+                                }
+
+                                currentSection.SectionData.LeftParticipant = null;
+                                currentSection.SectionData.DistanceLeft = 0;
+                            }
+                        }
+                        else
+                        {
+                            // Move from left to right if right is empty
+                            if (currentSection.SectionData.RightParticipant == null)
+                            {
+                                currentSection.SectionData.RightParticipant =
+                                    currentSection.SectionData.LeftParticipant;
+                                currentSection.SectionData.DistanceRight = nextPosition;
+
+                                currentSection.SectionData.LeftParticipant = null;
+                                currentSection.SectionData.DistanceLeft = 0;
+                            }
+                            else
+                            {
+                                currentSection.SectionData.DistanceLeft = nextPosition;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        public static void RenderParticipants(Track track)
+        {
+            // Show participant at next position
+            for (var node = track.Sections.First; node != null; node = node.Next)
+            {
+                var section = node.Value;
+
+                if (section.SectionData.LeftParticipant != null)
+                {
+                    var participantIconPath = section.SectionData.LeftParticipant.GetTeamColorAsIcon();
+                    
+                    _emptyBitmapGraphics.DrawImage(
+                        new Bitmap(participantIconPath), 
+                        new PointF(
+                            section.X + section.LeftPath.X[section.SectionData.DistanceLeft], 
+                            section.Y + section.LeftPath.Y[section.SectionData.DistanceLeft]
+                        )
+                    );
+                }
+
+                if (section.SectionData.RightParticipant != null)
+                {
+                    var participantIconPath = section.SectionData.RightParticipant.GetTeamColorAsIcon();
+                    
+                    _emptyBitmapGraphics.DrawImage(
+                        new Bitmap(participantIconPath), 
+                        new PointF(
+                            section.X + section.RightPath.X[section.SectionData.DistanceRight], 
+                            section.Y + section.RightPath.Y[section.SectionData.DistanceRight]
+                        )
+                    );
+                }
+            }
+        }
 
         public static BitmapSource GetTrack()
         {
             return BitmapImages.CreateBitmapSourceFromGdiBitmap(_emptyBitmap);
+        }
+
+        public static void ResetXY()
+        {
+            _x = 0;
+            _y = 0;
         }
     }
 }

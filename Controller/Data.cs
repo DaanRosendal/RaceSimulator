@@ -23,9 +23,11 @@ namespace Controller
             var driver1 = new Model.Driver("John", new Car(Qualities.Average, Performances.Normal), TeamColors.Green, "1");
             var driver2 = new Model.Driver("Rick", new Car(Qualities.Excellent, Performances.Outstanding), TeamColors.Blue, "2");
             var driver3 = new Model.Driver("Morty", new Car(Qualities.Garbage, Performances.Shit), TeamColors.Yellow, "3");
+            var driver4 = new Model.Driver("Donkey Dong", new Car(Qualities.Excellent, Performances.Shit), TeamColors.White, "4");
             Competition.AddParticipant(driver1);
             Competition.AddParticipant(driver2);
             Competition.AddParticipant(driver3);
+            Competition.AddParticipant(driver4);
         }
 
         public static void AddTracks()
@@ -40,7 +42,6 @@ namespace Controller
                 new Section(Direction.Up, Direction.Down, SectionType.Straight),
                 new Section(Direction.Up, Direction.Right, SectionType.Turn),
                 new Section(Direction.Left, Direction.Down, SectionType.Turn),
-                // new Section(Direction.Up, Direction.Down, SectionType.Straight),
                 new Section(Direction.Up, Direction.Left, SectionType.Turn),
                 new Section(Direction.Right, Direction.Left, SectionType.Straight),
                 new Section(Direction.Right, Direction.Left, SectionType.Straight),
@@ -49,7 +50,6 @@ namespace Controller
                 new Section(Direction.Down, Direction.Up, SectionType.Finish),
                 new Section(Direction.Down, Direction.Up, SectionType.Start),
                 new Section(Direction.Down, Direction.Up, SectionType.Start),
-                // new Section(Direction.Down, Direction.Up, SectionType.Straight),
             };
             var track1 = new Track("Yoshi Falls", sections1);
             
