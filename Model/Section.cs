@@ -39,7 +39,7 @@ namespace Model
                 LeftPath.X = new int[4] {0,25,50,75};
                 LeftPath.Y = new int[4] {25,25,25,25};
                 RightPath.X = new int[4] {0,25,50,75};
-                RightPath.Y = new int[4] {50,50,50,50};
+                RightPath.Y = new int[4] {50,50,50,50}; 
             }
 
             else if (incomingDirection == Direction.Right && outgoingDirection == Direction.Left)

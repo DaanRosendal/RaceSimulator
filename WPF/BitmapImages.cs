@@ -10,28 +10,19 @@ namespace WPF
 {
     public static class BitmapImages
     {
-        private static Dictionary<string, Bitmap> _cache = new Dictionary<string, Bitmap>();
+        private static Dictionary<string, Bitmap> _cache = new();
 
         public static Bitmap AddImageToCache(string url)
         {
-            if (_cache.TryGetValue(url, out var value))
+            if (_cache.TryGetValue(url, out var b))
             {
-                return value;
+                return b;
             }
-            else
-            {
-                var bitmap = new Bitmap(url);
-                _cache.Add(url, bitmap);
-                return bitmap;
-            }
+            
+            var bitmap = new Bitmap(url);
+            _cache.Add(url, bitmap);
+            return bitmap;
         }
-
-        // public static BitmapSource GetImage(string url)
-        // {
-        //     if (!_cache.TryGetValue(url, out var bitmap)) return null;
-        //     var bmps = CreateBitmapSourceFromGdiBitmap(bitmap);
-        //     return bmps;
-        // }
         
         public static void ClearCache()
         {
@@ -57,7 +48,7 @@ namespace WPF
         public static BitmapSource CreateBitmapSourceFromGdiBitmap(Bitmap bitmap)
         {
             if (bitmap == null)
-                throw new ArgumentNullException("bitmap");
+                throw new ArgumentNullException(nameof(bitmap));
 
             var rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
 
@@ -68,7 +59,7 @@ namespace WPF
 
             try
             {
-                var size = (rect.Width * rect.Height) * 4;
+                var size = rect.Width * rect.Height * 4;
 
                 return BitmapSource.Create(
                     bitmap.Width,
