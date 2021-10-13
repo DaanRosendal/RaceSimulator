@@ -14,11 +14,15 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Controller;
+using WPF.StatsWindows;
 
 namespace WPF
 {
     public partial class MainWindow : Window
     {
+        private Window _competitionStatsWindow;
+        private Window _raceStatsWindow;
+
         public MainWindow()
         {
             StartCompetition();
@@ -37,7 +41,6 @@ namespace WPF
 
             void RenderTrack()
             {
-                BitmapImages.ClearCache();
                 Visualizer.DrawTrack(Data.CurrentRace.Track);
                 Visualizer.MoveParticipants(Data.CurrentRace.Track);
                 Visualizer.RenderParticipants(Data.CurrentRace.Track);
@@ -53,18 +56,34 @@ namespace WPF
                 Visualizer.DrawTrack(Data.CurrentRace.Track);
                 Visualizer.DrawParticipantsInStartPosition(Data.CurrentRace.Track);
                 BaseImage.Source = Visualizer.GetTrack();
+                TrackName.Content = Data.CurrentRace.Track.Name;
             }
 
             void EndRace()
             {
                 Data.NextRace();
-                Visualizer.ResetXY();
-                BitmapImages.ClearCache();
-                Data.NextRace();
                 Visualizer.DrawTrack(Data.CurrentRace.Track);
                 Visualizer.DrawParticipantsInStartPosition(Data.CurrentRace.Track);
                 BaseImage.Source = Visualizer.GetTrack();
+                TrackName.Content = Data.CurrentRace.Track.Name;
             }
+        }
+
+        private void MenuItem_Click_Close_Application(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void MenuItem_Click_Show_Competition_Stats(object sender, RoutedEventArgs e)
+        {
+            _competitionStatsWindow = new CompetitionStatsWindow();
+            _competitionStatsWindow.Show();
+        }
+
+        private void MenuItem_Click_Show_Race_Stats(object sender, RoutedEventArgs e)
+        {
+            _raceStatsWindow = new RaceStatsWindow();
+            _raceStatsWindow.Show();
         }
     }
 }

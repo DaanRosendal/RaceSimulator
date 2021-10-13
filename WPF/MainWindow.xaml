@@ -5,10 +5,24 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:WPF"
     mc:Ignorable="d"
-    Title="MainWindow" Height="700" Width="800"
-    WindowState="Maximized"
+    Title="Race Simulator" Height="700" Width="800"
 >
     <Grid>
-        <Image x:Name="BaseImage" Margin="50,50,50,50"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="585*"/>
+            <RowDefinition Height="62*"/>
+        </Grid.RowDefinitions>
+        <Label x:Name="TrackName" Margin="0,19,0,0" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="200" Height="37" VerticalAlignment="Top" Grid.RowSpan="2" FontSize="18" FontFamily="Comic Sans MS"></Label>
+        <DockPanel Grid.RowSpan="3">
+            <Menu DockPanel.Dock="Top" Height="20" VerticalAlignment="Top">
+                <MenuItem Header="Menu">
+                    <MenuItem Header="Race statistics" Click="MenuItem_Click_Show_Race_Stats"/>
+                    <MenuItem Header="Competition statistics" Click="MenuItem_Click_Show_Competition_Stats"/>
+                    <MenuItem Header="Close application" Click="MenuItem_Click_Close_Application"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <Image x:Name="BaseImage" Margin="50,43,50,20" Grid.Row="1" Grid.RowSpan="2"/>
     </Grid>
 </Window>

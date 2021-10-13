@@ -1,6 +1,7 @@
 using System;
-using System.Diagnostics;
+using System.ComponentModel;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Controller;
@@ -38,19 +39,20 @@ namespace WPF
         
         #endregion
 
-        private static int _x = 0;
-        private static int _y = 0;
+        private static int _x;
+        private static int _y;
         private static Bitmap _emptyBitmap;
         private static Graphics _emptyBitmapGraphics;
         
         public static void DrawTrack(Track track)
         {
+
             _emptyBitmap = BitmapImages.GetEmptyBitmap(
                 Data.CurrentRace.Track.GetWidthInPx(),
                 Data.CurrentRace.Track.GetWidthInPx()
             );
             _emptyBitmapGraphics = Graphics.FromImage(_emptyBitmap);
-            
+
             foreach (var section in track.Sections)
             {
                 DrawSection(section);
@@ -322,17 +324,15 @@ namespace WPF
                     );
                 }
             }
+
+            PropertyChanged("", new PropertyChangedEventArgs(""));
         }
+
+        public static event PropertyChangedEventHandler PropertyChanged = delegate {};
 
         public static BitmapSource GetTrack()
         {
             return BitmapImages.CreateBitmapSourceFromGdiBitmap(_emptyBitmap);
-        }
-
-        public static void ResetXY()
-        {
-            _x = 0;
-            _y = 0;
         }
     }
 }

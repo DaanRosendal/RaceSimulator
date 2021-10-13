@@ -42,6 +42,7 @@ namespace WPF
             _cache.Add("empty", emptyBitmap);
 
             var emptyBitmapClone = emptyBitmap.Clone(new Rectangle(0,0,emptyBitmap.Width,emptyBitmap.Height), emptyBitmap.PixelFormat);
+            BitmapImages.ClearCache();
             return emptyBitmapClone;
         }
         
