@@ -6,6 +6,8 @@
     xmlns:local="clr-namespace:WPF"
     mc:Ignorable="d"
     Title="Race Simulator" Height="700" Width="800"
+    WindowStartupLocation="CenterOwner"
+
 >
     <Grid>
         <Grid.RowDefinitions>

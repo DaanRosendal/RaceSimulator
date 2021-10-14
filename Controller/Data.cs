@@ -80,8 +80,26 @@ namespace Controller
             };
             var track2 = new Track("Cheep Cheep Beach", sections2);
             
+            Section[] sections3 = 
+            { 
+                new Section(Direction.Down, Direction.Right, SectionType.Turn),
+                new Section(Direction.Left, Direction.Right, SectionType.Start),
+                new Section(Direction.Left, Direction.Right, SectionType.Start),
+                new Section(Direction.Left, Direction.Down, SectionType.Turn),
+                new Section(Direction.Up, Direction.Down, SectionType.Straight),
+                new Section(Direction.Up, Direction.Down, SectionType.Straight),
+                new Section(Direction.Up, Direction.Left, SectionType.Turn),
+                new Section(Direction.Right, Direction.Left, SectionType.Straight),
+                new Section(Direction.Right, Direction.Left, SectionType.Straight),
+                new Section(Direction.Right, Direction.Up, SectionType.Turn),
+                new Section(Direction.Down, Direction.Up, SectionType.Straight),
+                new Section(Direction.Down, Direction.Up, SectionType.Finish),
+            };
+            var track3 = new Track("Donut Plains", sections3);
+            
             Competition.AddTrack(track1);
             Competition.AddTrack(track2);
+            Competition.AddTrack(track3);
         }
         
         public static void NextRace()

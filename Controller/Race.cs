@@ -14,6 +14,7 @@ namespace Controller
         public List<IParticipant> Participants { get; set; }
         public DateTime StartTime { get; set; }
         public const int Laps = 3;
+        public Stopwatch Timer { get; set; }
         private Section FinishSection;
         private Random _random;
 
@@ -24,6 +25,7 @@ namespace Controller
             Participants = participants;
             PlaceDriversInStartPosition();
             FinishSection = GetFinishSectionOfCurrentTrack();
+            Timer = Stopwatch.StartNew();
         }
 
         public void RandomizeEquipment(int chance1In = -1)
@@ -182,6 +184,12 @@ namespace Controller
                 participant.Timer.Reset();
                 participant.Finished = false;
             }
+        }
+        
+        public long GetElapsedTime()
+        {
+            var time = Timer.ElapsedMilliseconds / 1000;
+            return time;
         }
     }
 }

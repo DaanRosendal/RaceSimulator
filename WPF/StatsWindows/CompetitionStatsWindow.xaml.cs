@@ -44,7 +44,8 @@ namespace WPF.StatsWindows
         
         private void UpdateStats()
         {
-            ElapsedTimeLabel.Content = $"Elapsed time: {Data.Competition.GetElapsedTime()} seconds";
+            Title = $"Competition statistics | Elapsed time: {Data.Competition.GetElapsedTime()} seconds";
+
             ListViewTracks.Items.Clear();
 
             if (!_tracks.Contains(Data.CurrentRace.Track))
@@ -57,10 +58,8 @@ namespace WPF.StatsWindows
             ListViewTracks.View = view;
             
             var count = 0;
-            foreach (var track in _tracks)
+            foreach (var trackName in _tracks.Select(track => $"{track.Name}"))
             {
-                var trackName = $"{track.Name}";
-                
                 ListViewTracks.Items.Add(new { Track = trackName });
             }
         }

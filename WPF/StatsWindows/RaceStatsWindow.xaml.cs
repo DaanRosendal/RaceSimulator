@@ -47,6 +47,7 @@ namespace WPF.StatsWindows
 
         private void UpdateStats()
         {
+            Title = $"Race statistics | Elapsed time: {Data.CurrentRace.GetElapsedTime()} seconds";
             ListBoxStandings.Items.Clear();
             ListBoxDriverTimes.Items.Clear();
             
