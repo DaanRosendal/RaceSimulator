@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.StatsWindows"
         mc:Ignorable="d"
-        Title="Race statistics" Height="450" Width="800">
+        Title="Race statistics"
+        SizeToContent="WidthAndHeight">
     <Grid>
-        
+        <DockPanel>
+            <ListBox x:Name="ListBoxStandings" HorizontalAlignment="Left" VerticalAlignment="Top" Height="100" Width="200" BorderThickness="0"/>
+            <ListBox x:Name="ListBoxDriverTimes" HorizontalAlignment="Left" VerticalAlignment="Top" Height="100" Width="200" BorderThickness="0"/>
+        </DockPanel>
     </Grid>
 </Window>

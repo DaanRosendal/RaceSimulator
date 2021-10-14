@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.StatsWindows"
         mc:Ignorable="d"
-        Title="Competition statistics" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Competition statistics" Height="150" Width="400"
+        >
+    <UniformGrid Columns="2">
+        <Label x:Name="ElapsedTimeLabel"></Label>
+       
+        <ListView Name="ListViewTracks"/>
+    </UniformGrid>
 </Window>

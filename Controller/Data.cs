@@ -20,10 +20,10 @@ namespace Controller
 
         public static void AddParticipants()
         {
-            var driver1 = new Model.Driver("John", new Car(Qualities.Average, Performances.Normal), TeamColors.Green, "1");
+            var driver1 = new Model.Driver("Luigi", new Car(Qualities.Average, Performances.Normal), TeamColors.Green, "1");
             var driver2 = new Model.Driver("Rick", new Car(Qualities.Excellent, Performances.Outstanding), TeamColors.Blue, "2");
             var driver3 = new Model.Driver("Morty", new Car(Qualities.Garbage, Performances.Shit), TeamColors.Yellow, "3");
-            var driver4 = new Model.Driver("Donkey Dong", new Car(Qualities.Excellent, Performances.Shit), TeamColors.White, "4");
+            var driver4 = new Model.Driver("Donkey Kong", new Car(Qualities.Excellent, Performances.Shit), TeamColors.White, "4");
             Competition.AddParticipant(driver1);
             Competition.AddParticipant(driver2);
             Competition.AddParticipant(driver3);
@@ -86,8 +86,10 @@ namespace Controller
         
         public static void NextRace()
         {
-            if (Competition.Tracks.Count != 0) 
+            if (Competition.Tracks.Count != 0)
                 CurrentRace = new Race(Competition.ChangeToNextTrack(), Competition.Participants);
+            else
+                Competition.Finished = true;
         }
     }
 }

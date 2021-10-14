@@ -201,7 +201,7 @@ namespace WPF
                 {
                     if (!currentSection.SectionData.RightParticipant.Equipment.IsBroken)
                     {
-                        currentSection.SectionData.RightParticipant.previousSection = currentSection;
+                        currentSection.SectionData.RightParticipant.PreviousSection = currentSection;
                         var nextPosition = currentSection.SectionData.RightParticipant.Equipment.Speed +
                                            currentSection.SectionData.DistanceRight;
                         // Check if participant must be moved to next section
@@ -211,9 +211,11 @@ namespace WPF
                             {
                                 nextSection.SectionData.RightParticipant = currentSection.SectionData.RightParticipant;
                                 nextSection.SectionData.DistanceRight = nextPosition - 4;
+                                currentSection.SectionData.RightParticipant.PassedSections++;
 
                                 currentSection.SectionData.RightParticipant = null;
                                 currentSection.SectionData.DistanceRight = 0;
+                                
                             }
                             else if (nextSection.SectionData.LeftParticipant == null)
                             {
@@ -225,6 +227,7 @@ namespace WPF
                                     nextSection.SectionData.LeftParticipant =
                                         currentSection.SectionData.RightParticipant;
                                     nextSection.SectionData.DistanceLeft = nextPosition - 4;
+                                    currentSection.SectionData.RightParticipant.PassedSections++;
 
                                     currentSection.SectionData.RightParticipant = null;
                                     currentSection.SectionData.DistanceRight = 0;
@@ -243,7 +246,7 @@ namespace WPF
                 {
                     if (!currentSection.SectionData.LeftParticipant.Equipment.IsBroken)
                     {
-                        currentSection.SectionData.LeftParticipant.previousSection = currentSection;
+                        currentSection.SectionData.LeftParticipant.PreviousSection = currentSection;
                         var nextPosition = currentSection.SectionData.LeftParticipant.Equipment.Speed +
                                            currentSection.SectionData.DistanceLeft;
                         // Check if participant must be moved to next section
@@ -257,12 +260,17 @@ namespace WPF
                                     nextSection.SectionData.RightParticipant =
                                         currentSection.SectionData.LeftParticipant;
                                     nextSection.SectionData.DistanceRight = nextPosition - 4;
+                                    
+                                    currentSection.SectionData.LeftParticipant.PassedSections++;
                                 }
                                 else
                                 {
                                     nextSection.SectionData.LeftParticipant =
                                         currentSection.SectionData.LeftParticipant;
                                     nextSection.SectionData.DistanceLeft = nextPosition - 4;
+                                    
+                                    currentSection.SectionData.LeftParticipant.PassedSections++;
+
                                 }
 
                                 currentSection.SectionData.LeftParticipant = null;
@@ -324,11 +332,7 @@ namespace WPF
                     );
                 }
             }
-
-            PropertyChanged("", new PropertyChangedEventArgs(""));
         }
-
-        public static event PropertyChangedEventHandler PropertyChanged = delegate {};
 
         public static BitmapSource GetTrack()
         {

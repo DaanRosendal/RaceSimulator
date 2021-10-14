@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using Model;
 
 namespace Controller
@@ -11,7 +13,7 @@ namespace Controller
         public Track Track { get; set; }
         public List<IParticipant> Participants { get; set; }
         public DateTime StartTime { get; set; }
-        private const int Laps = 3;
+        public const int Laps = 3;
         private Section FinishSection;
         private Random _random;
 
@@ -90,10 +92,12 @@ namespace Controller
                     return true;
             }
 
+            
             foreach (var participant in Participants)
             {
                 participant.DrivenLaps = 0;
             }
+            
             return false;
         }
 
@@ -112,7 +116,7 @@ namespace Controller
 
         private void HandleFinishEntry(IParticipant participant)
         {
-            if (participant.previousSection != FinishSection)
+            if (participant.PreviousSection != FinishSection)
             {
                 participant.DrivenLaps++;
             }
@@ -120,9 +124,14 @@ namespace Controller
             if (participant.DrivenLaps >= Laps)
             {
                 if (FinishSection.SectionData.LeftParticipant == participant)
+                {
+                    FinishSection.SectionData.LeftParticipant.Finished = true;
                     FinishSection.SectionData.LeftParticipant = null;
-                else if (FinishSection.SectionData.RightParticipant == participant)
+                } else if (FinishSection.SectionData.RightParticipant == participant)
+                {
+                    FinishSection.SectionData.RightParticipant.Finished = true;
                     FinishSection.SectionData.RightParticipant = null;
+                }
             }
         }
         
@@ -140,11 +149,13 @@ namespace Controller
                     {
                         section.SectionData.LeftParticipant = Participants.ElementAt(count++);
                         section.SectionData.DistanceLeft = 1;
+                        section.SectionData.LeftParticipant.Timer = Stopwatch.StartNew();
                         
                         if (count < Participants.Count)
                         {
                             section.SectionData.RightParticipant = Participants.ElementAt(count++);
                             section.SectionData.DistanceRight = 1;
+                            section.SectionData.RightParticipant.Timer = Stopwatch.StartNew();
                         }
                         else
                         {
@@ -162,6 +173,15 @@ namespace Controller
         private Section GetFinishSectionOfCurrentTrack()
         {
             return Track.Sections.FirstOrDefault(section => section.SectionType == SectionType.Finish);
+        }
+
+        public void PrepareDriversForNextRace()
+        {
+            foreach (var participant in Participants)
+            {
+                participant.Timer.Reset();
+                participant.Finished = false;
+            }
         }
     }
 }

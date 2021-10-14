@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Controller;
+using Model;
 using WPF.StatsWindows;
 
 namespace WPF
@@ -31,23 +32,16 @@ namespace WPF
             timer.Start();
             timer.Tick += (sender, args) =>
             {
-                RenderTrack();
-                
                 if (!Data.CurrentRace.ParticipantsOnTrack())
                 {
                     EndRace();
+                    
+                    
                 }
-            };
 
-            void RenderTrack()
-            {
-                Visualizer.DrawTrack(Data.CurrentRace.Track);
-                Visualizer.MoveParticipants(Data.CurrentRace.Track);
-                Visualizer.RenderParticipants(Data.CurrentRace.Track);
-                BaseImage.Source = Visualizer.GetTrack();
-                Data.CurrentRace.CheckIfParticipantsOnFinish();
-                Data.CurrentRace.RandomizeEquipment(10);
-            }
+
+                RenderTrack();
+            };
 
             void StartCompetition()
             {
@@ -58,10 +52,28 @@ namespace WPF
                 BaseImage.Source = Visualizer.GetTrack();
                 TrackName.Content = Data.CurrentRace.Track.Name;
             }
+            
+            void RenderTrack()
+            {
+                Visualizer.DrawTrack(Data.CurrentRace.Track);
+                Visualizer.MoveParticipants(Data.CurrentRace.Track);
+                Visualizer.RenderParticipants(Data.CurrentRace.Track);
+                BaseImage.Source = Visualizer.GetTrack();
+                Data.CurrentRace.CheckIfParticipantsOnFinish();
+                Data.CurrentRace.RandomizeEquipment(10);
+            }
 
             void EndRace()
             {
                 Data.NextRace();
+                
+                if (Data.Competition.Finished)
+                {
+                    Data.Competition.EndCompetition();
+                    
+                    System.Windows.Application.Current.Shutdown();
+                }
+                
                 Visualizer.DrawTrack(Data.CurrentRace.Track);
                 Visualizer.DrawParticipantsInStartPosition(Data.CurrentRace.Track);
                 BaseImage.Source = Visualizer.GetTrack();

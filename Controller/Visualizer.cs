@@ -326,7 +326,7 @@ namespace Controller
                 {
                     if (!currentSection.SectionData.RightParticipant.Equipment.IsBroken)
                     {
-                        currentSection.SectionData.RightParticipant.previousSection = currentSection;
+                        currentSection.SectionData.RightParticipant.PreviousSection = currentSection;
                         var nextPosition = currentSection.SectionData.RightParticipant.Equipment.Speed +
                                            currentSection.SectionData.DistanceRight;
                         // Check if participant must be moved to next section
@@ -368,7 +368,7 @@ namespace Controller
                 {
                     if (!currentSection.SectionData.LeftParticipant.Equipment.IsBroken)
                     {
-                        currentSection.SectionData.LeftParticipant.previousSection = currentSection;
+                        currentSection.SectionData.LeftParticipant.PreviousSection = currentSection;
                         var nextPosition = currentSection.SectionData.LeftParticipant.Equipment.Speed +
                                            currentSection.SectionData.DistanceLeft;
                         // Check if participant must be moved to next section

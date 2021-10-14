@@ -126,8 +126,8 @@ namespace Model
                 // LeftPath.Y = new int[4] {3,2,2,2};
                 // RightPath.X = new int[4] {3,2,1,1};
                 // RightPath.Y = new int[4] {1,1,2,3};
-                LeftPath.X = new int[4] {50,50,25,25};
-                LeftPath.Y = new int[4] {75,50,50,50};
+                LeftPath.X = new int[4] {75,50,50,50};
+                LeftPath.Y = new int[4] {50,50,75,75};
                 RightPath.X = new int[4] {75,50,25,25};
                 RightPath.Y = new int[4] {25,25,50,75};
             } 

@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using Controller;
+using Model;
 
 namespace WPF.StatsWindows
 {
@@ -19,14 +22,47 @@ namespace WPF.StatsWindows
     /// </summary>
     public partial class CompetitionStatsWindow : Window
     {
+        private List<Track> _tracks = new();
+        
         public CompetitionStatsWindow()
         {
             InitializeComponent();
+            UpdateStats();
+            var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            timer.Start();
+            timer.Tick += (sender, args) =>
+            {
+                UpdateStats();
+            };
         }
 
-        public void UpdateStats()
+        // private void UpdateStats()
+        // {
+        //     ElapsedTimeLabel.Content = $"Elapsed time: {Data.Competition.GetElapsedTime()}";
+        //     ListBoxStandingsPerRace.Items
+        // }
+        
+        private void UpdateStats()
         {
+            ElapsedTimeLabel.Content = $"Elapsed time: {Data.Competition.GetElapsedTime()} seconds";
+            ListViewTracks.Items.Clear();
 
+            if (!_tracks.Contains(Data.CurrentRace.Track))
+            {
+                _tracks.Add(Data.CurrentRace.Track);
+            }
+            
+            var view = new GridView();
+            view.Columns.Add(new GridViewColumn { Header = "Tracks", DisplayMemberBinding = new Binding("Track") });
+            ListViewTracks.View = view;
+            
+            var count = 0;
+            foreach (var track in _tracks)
+            {
+                var trackName = $"{track.Name}";
+                
+                ListViewTracks.Items.Add(new { Track = trackName });
+            }
         }
     }
 }
